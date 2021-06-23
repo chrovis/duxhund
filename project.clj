@@ -5,4 +5,10 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [cljam "0.8.0"]]
-  :repl-options {:init-ns chrovis.duxhund})
+  :repl-options {:init-ns duxhund.core}
+  :main duxhund.cli
+  :profiles {:dev
+             {:global-vars {*warn-on-reflection* true}}
+             :uberjar
+             {:aot :all
+              :uberjar-name "duxhund.jar"}})
