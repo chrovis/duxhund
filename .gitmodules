@@ -1,0 +1,4 @@
+[submodule "fusionfusion"]
+	path = fusionfusion
+	url = git@github.com:chrovis-genomon/fusionfusion.git
+	branch = feature/short-range-chimera-filter2
