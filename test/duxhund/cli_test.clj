@@ -9,7 +9,7 @@
                            "--sorted-bam" "aligned.sorted.bam"
                            "--target" "target.bed"
                            "--output" "out-dir"]
-                          cli/generate-opts)]
+                          cli/generate-fastq-opts)]
       (is (= {:bam "aligned.bam"
               :sorted-bam "aligned.sorted.bam"
               :target "target.bed"
@@ -24,7 +24,7 @@
                            "-t" "target.bed"
                            "-o" "out-dir"
                            "--min-softclip-len" 15]
-                          cli/generate-opts)]
+                          cli/generate-fastq-opts)]
       (is (= {:bam "aligned.bam"
               :sorted-bam "aligned.sorted.bam"
               :target "target.bed"
@@ -37,7 +37,7 @@
           (cli/parse-opts ["--bam" "aligned.bam"
                            "-t" "target.bed"
                            "-o" "out-dir"]
-                          cli/generate-opts)]
+                          cli/generate-fastq-opts)]
       (is (empty? arguments))
       (is (seq errors))))
   (testing "fixup-sam"
@@ -45,7 +45,7 @@
           (cli/parse-opts ["--input" "input.bam"
                            "--cache" "cache.edn"
                            "--output" "output.bam"]
-                          cli/fixup-opts)]
+                          cli/fixup-sam-opts)]
       (is (= {:input "input.bam"
               :cache "cache.edn"
               :output "output.bam"}
@@ -56,7 +56,7 @@
           (cli/parse-opts ["-i" "input.bam"
                            "-c" "cache.edb"
                            "-o" "output.bam"]
-                          cli/fixup-opts)]
+                          cli/fixup-sam-opts)]
       (is (= {:input "input.bam"
               :cache "cache.edb"
               :output "output.bam"}
@@ -66,6 +66,6 @@
     (let [{:keys [_options arguments errors]}
           (cli/parse-opts ["-i" "input.bam"
                            "-o" "output.bam"]
-                          cli/fixup-opts)]
+                          cli/fixup-sam-opts)]
       (is (empty? arguments))
       (is (seq errors)))))

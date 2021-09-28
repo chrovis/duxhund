@@ -123,9 +123,9 @@
       (println "+")
       (println qual))))
 
-(defn generate
+(defn generate-fastq
   ([unsorted-bam sorted-bam target-bed output-dir]
-   (generate unsorted-bam sorted-bam target-bed output-dir {}))
+   (generate-fastq unsorted-bam sorted-bam target-bed output-dir {}))
   ([unsorted-bam sorted-bam target-bed output-dir
     {:keys [min-softclip-len] :or {min-softclip-len 20}}]
    (let [qnames (extract-target-qnames target-bed sorted-bam)]
@@ -192,7 +192,7 @@
        (partition-by :qname)
        (mapcat fixup-flag)))
 
-(defn fixup [in-sam cache-edn out-sam]
+(defn fixup-sam [in-sam cache-edn out-sam]
   (let [qname->seq (edn/read-string (slurp cache-edn))]
     (with-open [r (sam/reader in-sam)
                 w (sam/writer out-sam)]

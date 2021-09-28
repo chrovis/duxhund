@@ -69,7 +69,7 @@ mkdir -p "$outdir"
 "$BWA" mem $BWA_OPTS -a "$reference" "$r1" "$r2" | "$SAMTOOLS" view $SAMTOOLS_OPTS -b > "$outdir/aligned.bam"
 
 # shellcheck disable=SC2086
-java -cp "$DUXHUND_JAR" duxhund.cli generate \
+java -cp "$DUXHUND_JAR" duxhund.cli generate-fastq \
   --bam "$outdir/aligned.bam" \
   --sorted-bam "$outdir/aligned.sorted.bam" \
   --target "$target" \
@@ -80,7 +80,7 @@ java -cp "$DUXHUND_JAR" duxhund.cli generate \
 "$BWA" mem $BWA_OPTS -a -p -C "$masked_reference" "$outdir/out.fastq" > "$outdir/realigned.sam"
 
 # shellcheck disable=SC2086
-java -cp "$DUXHUND_JAR" duxhund.cli fixup \
+java -cp "$DUXHUND_JAR" duxhund.cli fixup-sam \
   --input "$outdir/realigned.sam" \
   --cache "$outdir/cache.edn" \
   --output "$outdir/realigned.fixed.sam" \
