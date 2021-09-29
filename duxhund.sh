@@ -81,7 +81,7 @@ java -cp "$DUXHUND_JAR" duxhund.cli generate-fastq \
 # shellcheck disable=SC2086
 java -cp "$DUXHUND_JAR" duxhund.cli fixup-sam \
   --input "$outdir/realigned.sam" \
-  --cache "$outdir/cache.edn" \
+  --saved-seqs "$outdir/saved-seqs.edn" \
   --output "$outdir/realigned.fixed.sam" \
   $DUXHUND_FIXUP_OPTS
 
@@ -99,8 +99,8 @@ cp "$outdir/fusionfusion/fusion_fusion.result.txt" "$outdir/result.txt"
 
 if [ -z "${DEBUG-}" ]; then
   rm -rf "$outdir/aligned.bam" \
-    "$outdir/cache.edn" \
     "$outdir/out.fastq" \
+    "$outdir/saved-seqs.edn" \
     "$outdir/realigned.sam" \
     "$outdir/fusionfusion"
 fi

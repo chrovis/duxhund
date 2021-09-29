@@ -90,7 +90,7 @@
        (generate-soft-clipped-seqs min-softclip-len)
        (sequence cat)))
 
-(defn generate-cache [alns]
+(defn generate-saved-seqs [alns]
   (->> alns
        (partition-by :qname)
        (reduce
@@ -125,7 +125,7 @@
    (with-open [bed-reader (bed/reader target-bed)
                bam-reader (sam/reader bam)
                fastq-writer (io/writer (io/file output-dir "out.fastq"))
-               cache-writer (io/writer (io/file output-dir "cache.edn"))]
+               seqs-writer (io/writer (io/file output-dir "saved-seqs.edn"))]
      (let [target (intervals/index-intervals (bed/read-fields bed-reader))
            alns (for [chunk (->> (sam/read-alignments bam-reader)
                                  (partition-by :qname))
@@ -135,8 +135,8 @@
                       aln chunk]
                   aln)]
        (write-as-fastq (generate-seqs min-softclip-len alns) fastq-writer)
-       (binding [*out* cache-writer]
-         (prn (generate-cache alns)))))))
+       (binding [*out* seqs-writer]
+         (prn (generate-saved-seqs alns)))))))
 
 (defn- fixup-cigar [cigar cutoff]
   (let [[_ dir n] (re-matches #"([LR])(\d+)" cutoff)
@@ -192,8 +192,8 @@
        (partition-by :qname)
        (mapcat fixup-flag)))
 
-(defn fixup-sam [in-sam cache-edn out-sam]
-  (let [qname->seq (edn/read-string (slurp cache-edn))]
+(defn fixup-sam [in-sam saved-seqs-edn out-sam]
+  (let [qname->seq (edn/read-string (slurp saved-seqs-edn))]
     (with-open [r (sam/reader in-sam)
                 w (sam/writer out-sam)]
       (let [header (sam/read-header r)]

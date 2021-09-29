@@ -38,22 +38,22 @@
   (testing "fixup-sam"
     (let [{:keys [options arguments errors]}
           (cli/parse-opts ["--input" "input.bam"
-                           "--cache" "cache.edn"
+                           "--saved-seqs" "saved-seqs.edn"
                            "--output" "output.bam"]
                           cli/fixup-sam-opts)]
       (is (= {:input "input.bam"
-              :cache "cache.edn"
+              :saved-seqs "saved-seqs.edn"
               :output "output.bam"}
              options))
       (is (empty? arguments))
       (is (empty? errors)))
     (let [{:keys [options arguments errors]}
           (cli/parse-opts ["-i" "input.bam"
-                           "-c" "cache.edb"
+                           "-s" "saved-seqs.edn"
                            "-o" "output.bam"]
                           cli/fixup-sam-opts)]
       (is (= {:input "input.bam"
-              :cache "cache.edb"
+              :saved-seqs "saved-seqs.edn"
               :output "output.bam"}
              options))
       (is (empty? arguments))

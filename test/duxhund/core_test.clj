@@ -41,7 +41,7 @@
    ["qname4" 1] {:seq "GGGGGCATGCATGCATTTTT" :qual "FFFFFEEEEEDDDDCCCBBA"}
    ["qname4" 2] {:seq "AATTGGCCAATTGGCCATGC" :qual "ABBCCCDDDDEEEEEFFFFF"}})
 
-(deftest generate-cache-test
+(deftest generate-saved-seqs-test
   (is (= test-qname->seq
          (->> [["qname1" 99 "chr4" 12345 "12M8S" "AAAAATGCATGCATGCCCCC" "ABBCCCDDDDEEEEEFFFFF"]
                ["qname1" 147 "chr4" 23456 "20M" "AATTGGCCAATTGGCCATGC" "ABBCCCDDDDEEEEEFFFFF"]
@@ -55,7 +55,7 @@
                ["qname4" 163 "chr14" 23456 "13M7S" "AATTGGCCAATTGGCCATGC" "ABBCCCDDDDEEEEEFFFFF"]
                ["qname4" 419 "chr14" 65432 "13M7H" "*" "*"]]
               (map (partial zipmap [:qname :flag :rname :pos :cigar :seq :qual]))
-              dux/generate-cache))))
+              dux/generate-saved-seqs))))
 
 (deftest fixup-alignments-test
   (is (= [["qname1:chr4:12357" 99 "12M8S" "AAAAATGCATGCATGCCCCC" "ABBCCCDDDDEEEEEFFFFF"]
