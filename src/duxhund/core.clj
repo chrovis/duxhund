@@ -4,17 +4,11 @@
             [cljam.io.sam.util.cigar :as cigar]
             [cljam.io.sam.util.flag :as flag]
             [cljam.io.sam.util.option :as option]
+            [cljam.util.intervals :as intervals]
             [cljam.util.sequence :as seq]
             [clojure.edn :as edn]
             [clojure.java.io :as io]
             [clojure.string :as str]))
-
-(defn- extract-target-qnames [target-bed sorted-bam]
-  (with-open [r (sam/reader sorted-bam)
-              t (bed/reader target-bed)]
-    (->> (bed/read-fields t)
-         (mapcat #(sam/read-alignments r %))
-         (into #{} (map :qname)))))
 
 (defn- primary-mapped? [flag]
   (zero? (bit-and flag (flag/encoded #{:secondary :supplementary :unmapped}))))
@@ -124,19 +118,25 @@
       (println qual))))
 
 (defn generate-fastq
-  ([unsorted-bam sorted-bam target-bed output-dir]
-   (generate-fastq unsorted-bam sorted-bam target-bed output-dir {}))
-  ([unsorted-bam sorted-bam target-bed output-dir
+  ([bam target-bed output-dir]
+   (generate-fastq bam target-bed output-dir {}))
+  ([bam target-bed output-dir
     {:keys [min-softclip-len] :or {min-softclip-len 20}}]
-   (let [qnames (extract-target-qnames target-bed sorted-bam)]
-     (with-open [bam-reader (sam/reader unsorted-bam)
-                 fastq-writer (io/writer (io/file output-dir "out.fastq"))
-                 cache-writer (io/writer (io/file output-dir "cache.edn"))]
-       (let [alns (filter #(contains? qnames (:qname %))
-                          (sam/read-alignments bam-reader))]
-         (write-as-fastq (generate-seqs min-softclip-len alns) fastq-writer)
-         (binding [*out* cache-writer]
-           (prn (generate-cache alns))))))))
+   (with-open [bed-reader (bed/reader target-bed)
+               bam-reader (sam/reader bam)
+               fastq-writer (io/writer (io/file output-dir "out.fastq"))
+               cache-writer (io/writer (io/file output-dir "cache.edn"))]
+     (let [target (intervals/index-intervals (bed/read-fields bed-reader))
+           alns (for [chunk (->> (sam/read-alignments bam-reader)
+                                 (partition-by :qname))
+                      :when (some #(seq (intervals/find-overlap-intervals
+                                         target (:rname %) (:pos %) (:end %)))
+                                  chunk)
+                      aln chunk]
+                  aln)]
+       (write-as-fastq (generate-seqs min-softclip-len alns) fastq-writer)
+       (binding [*out* cache-writer]
+         (prn (generate-cache alns)))))))
 
 (defn- fixup-cigar [cigar cutoff]
   (let [[_ dir n] (re-matches #"([LR])(\d+)" cutoff)

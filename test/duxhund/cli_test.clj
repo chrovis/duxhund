@@ -5,13 +5,11 @@
 (deftest parse-opts-test
   (testing "generate-fastq"
     (let [{:keys [options arguments errors]}
-          (cli/parse-opts ["--bam" "aligned.bam"
-                           "--sorted-bam" "aligned.sorted.bam"
+          (cli/parse-opts ["--input" "aligned.bam"
                            "--target" "target.bed"
                            "--output" "out-dir"]
                           cli/generate-fastq-opts)]
-      (is (= {:bam "aligned.bam"
-              :sorted-bam "aligned.sorted.bam"
+      (is (= {:input "aligned.bam"
               :target "target.bed"
               :output "out-dir"
               :min-softclip-len 20}
@@ -19,14 +17,12 @@
       (is (empty? arguments))
       (is (empty? errors)))
     (let [{:keys [options arguments errors]}
-          (cli/parse-opts ["--bam" "aligned.bam"
-                           "--sorted-bam" "aligned.sorted.bam"
+          (cli/parse-opts ["-i" "aligned.bam"
                            "-t" "target.bed"
                            "-o" "out-dir"
                            "--min-softclip-len" 15]
                           cli/generate-fastq-opts)]
-      (is (= {:bam "aligned.bam"
-              :sorted-bam "aligned.sorted.bam"
+      (is (= {:input "aligned.bam"
               :target "target.bed"
               :output "out-dir"
               :min-softclip-len 15}
@@ -34,8 +30,7 @@
       (is (empty? arguments))
       (is (empty? errors)))
     (let [{:keys [_options arguments errors]}
-          (cli/parse-opts ["--bam" "aligned.bam"
-                           "-t" "target.bed"
+          (cli/parse-opts ["-t" "target.bed"
                            "-o" "out-dir"]
                           cli/generate-fastq-opts)]
       (is (empty? arguments))

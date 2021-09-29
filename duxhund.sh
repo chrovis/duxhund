@@ -70,8 +70,7 @@ mkdir -p "$outdir"
 
 # shellcheck disable=SC2086
 java -cp "$DUXHUND_JAR" duxhund.cli generate-fastq \
-  --bam "$outdir/aligned.bam" \
-  --sorted-bam "$outdir/aligned.sorted.bam" \
+  --input "$outdir/aligned.bam" \
   --target "$target" \
   --output "$outdir" \
   $DUXHUND_GENERATE_OPTS

@@ -44,17 +44,16 @@
       options)))
 
 (def generate-fastq-opts
-  [[nil "--bam BAM" "Unsorted BAM path"]
-   [nil "--sorted-bam BAM" "Sorted BAM path"]
+  [["-i" "--input BAM" "Unsorted BAM path"]
    ["-t" "--target TARGET" "Target BED path"]
    ["-o" "--output DIR" "Output dir path"]
    [nil "--min-softclip-len LEN" "Minimum length of softclip to extract"
     :default 20 :parse-fn as-int!]])
 
 (defn generate-fastq [argv]
-  (when-let [{:keys [target bam sorted-bam output] :as opts}
+  (when-let [{:keys [input target output] :as opts}
              (get-opts! (parse-opts argv generate-fastq-opts))]
-    (dux/generate-fastq bam sorted-bam target output opts)
+    (dux/generate-fastq input target output opts)
     0))
 
 (def fixup-sam-opts
