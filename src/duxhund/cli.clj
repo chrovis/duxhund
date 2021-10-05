@@ -62,9 +62,9 @@
    ["-o" "--output BAM" "Output BAM path"]])
 
 (defn fixup-sam [argv]
-  (when-let [{:keys [input cache output]}
+  (when-let [{:keys [input saved-seqs output]}
              (get-opts! (parse-opts argv fixup-sam-opts))]
-    (dux/fixup-sam input cache output)
+    (dux/fixup-sam input saved-seqs output)
     0))
 
 (def sub-commands
