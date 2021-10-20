@@ -1,4 +1,6 @@
 # duxhund
+[![build](https://github.com/chrovis/duxhund/actions/workflows/build.yml/badge.svg)](https://github.com/chrovis/duxhund/actions/workflows/build.yml)
+[![test](https://github.com/chrovis/duxhund/actions/workflows/test.yml/badge.svg)](https://github.com/chrovis/duxhund/actions/workflows/test.yml)
 
 DUX4 fusions finder
 
