@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir --upgrade awscli==1.19.112
 RUN wget -q https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2 \
  && tar xf bwa-0.7.17.tar.bz2 \
  && cd bwa-0.7.17 \
- && make \
+ && make CFLAGS='-fcommon -Wall -Wno-unused-function -O2' \
  && mv bwa /usr/local/bin/bwa \
  && cd .. \
  && rm -rf bwa-0.7.17
