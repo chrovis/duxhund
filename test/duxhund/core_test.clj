@@ -61,8 +61,11 @@
   (is (= [["qname1:chr4:12357" 99 "12M8S" "AAAAATGCATGCATGCCCCC" "ABBCCCDDDDEEEEEFFFFF"]
           ["qname1:chr4:12357" 355 "12S8M" "AAAAATGCATGCATGCCCCC" "ABBCCCDDDDEEEEEFFFFF"]
           ["qname1:chr4:12357" 147 "20M" "AATTGGCCAATTGGCCATGC" "ABBCCCDDDDEEEEEFFFFF"]
-          ["qname3:chr10:12350" 64 "5S9M6S" "AAAAATGCATGCATGCCCCC" "ABBCCCDDDDEEEEEFFFFF"]
-          ["qname3:chr10:12350" 144 "20M" "AATTGGCCAATTGGCCATGC" "ABBCCCDDDDEEEEEFFFFF"]
+          ;; These alignments will be filtered out because they are incomplete,
+          ;; which means one or more alignments in the same triplet was not
+          ;; mapped as a primary alignment
+          ;; ["qname3:chr10:12350" 64 "5S9M6S" "AAAAATGCATGCATGCCCCC" "ABBCCCDDDDEEEEEFFFFF"]
+          ;; ["qname3:chr10:12350" 144 "20M" "AATTGGCCAATTGGCCATGC" "ABBCCCDDDDEEEEEFFFFF"]
           ["qname3:chr10:12359" 419 "14S6M" "GCATGGCCAATTGGCCAATT" "FFFFFEEEEEDDDDCCCBBA"]
           ["qname3:chr10:12359" 163 "11M9S" "GCATGGCCAATTGGCCAATT" "FFFFFEEEEEDDDDCCCBBA"]
           ["qname3:chr10:12359" 83 "20M" "GGGGGCATGCATGCATTTTT" "FFFFFEEEEEDDDDCCCBBA"]
