@@ -161,10 +161,8 @@
             (->> (cigar/parse (:cigar a))
                  (keep (fn [[n op]] (when (= op \M) n)))
                  (apply +)))]
-    (if (and (nil? a3)
-             (or (nil? a2)
-                 (not= (flag/r1r2 (:flag a1))
-                       (flag/r1r2 (:flag a2)))))
+    (if (not= (flag/r1r2 (:flag a1))
+              (flag/r1r2 (:flag a2)))
       alns
       (let [flag-inherited (flag/encoded #{:multiple :properly-aligned
                                            :next-unmapped :next-reversed})
@@ -190,6 +188,7 @@
                                     (bit-shift-left r1r2 6)))
              (cond-> cutoff (update :cigar fixup-cigar cutoff))))
        (partition-by :qname)
+       (filter (fn [[_a1 _a2 a3]] a3))
        (mapcat fixup-flag)))
 
 (defn fixup-sam [in-sam saved-seqs-edn out-sam]
