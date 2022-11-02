@@ -68,11 +68,18 @@
           :qual (:qual aln')}
          (revcomp-if-necessary (:flag aln')))]))
 
+(defn- complement-seq&qual [aln r1 r2]
+  (if (or (= (:seq aln) "*") (= (:qual aln) "*"))
+    (let [{:keys [seq qual]} (if (flag/r1? (:flag aln)) r1 r2)]
+      (assoc aln :seq seq :qual qual))
+    aln))
+
 (defn- generate-soft-clipped-seqs [thres alns]
   (for [chunk (partition-by :qname alns)
         :let [{:keys [r1 r2]} (collect-primary-alignments chunk)]
         aln chunk
-        :let [cigar (cigar/parse (:cigar aln))
+        :let [aln (complement-seq&qual aln r1 r2)
+              cigar (cigar/parse (:cigar aln))
               left-clip (clipped-len thres (first cigar))
               right-clip (clipped-len thres (last cigar))
               aln' (if (flag/r1? (:flag aln)) r2 r1)]
