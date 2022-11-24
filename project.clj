@@ -1,4 +1,4 @@
-(defproject com.chrovis/duxhund "0.1.3-SNAPSHOT"
+(defproject com.chrovis/duxhund "0.1.3"
   :description "DUX4 fusions finder"
   :url "https://github.com/chrovis/duxhund"
   :license {:name "GPL-3.0-or-later"
