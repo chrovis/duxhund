@@ -23,7 +23,8 @@ All notable changes to this project will be documented in this file. This change
 ## [0.1.0] - 2021-10-19
 - First release
 
-[Unreleased]: https://github.com/chrovis/duxhund/compare/0.1.2...HEAD
+[Unreleased]: https://github.com/chrovis/duxhund/compare/0.1.3...HEAD
+[0.1.3]: https://github.com/chrovis/duxhund/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/chrovis/duxhund/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/chrovis/duxhund/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/chrovis/duxhund/releases/tag/0.1.0
