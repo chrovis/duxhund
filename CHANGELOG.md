@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+## [0.1.3] - 2022-11-24
+### Added
+- Add extra DUX4-like regions to DUX4 pseudogene list ([#12](https://github.com/chrovis/duxhund/pull/12))
+
+### Fixed
+- Fix errors that occur when handling “incomplete" alignment triplets ([#9](https://github.com/chrovis/duxhund/pull/9))
+- Complement :seq and :qual for alignments lacking them ([#11](https://github.com/chrovis/duxhund/pull/11))
+- Add -Y as a BWA default option ([#13](https://github.com/chrovis/duxhund/pull/13))
+
 ## [0.1.2] - 2022-08-05
 ### Changed
 - Change dependent fusionfusion's branch to fix/inserted-seq2 ([#7](https://github.com/chrovis/duxhund/pull/7))
