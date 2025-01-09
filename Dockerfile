@@ -9,7 +9,7 @@ FROM chrovis-genomon/fusionfusion:${BASE_IMAGE_TAG}
 WORKDIR /opt
 COPY --from=builder /opt/duxhund/target/duxhund.jar /opt/duxhund/duxhund.jar
 COPY --from=builder /opt/duxhund/duxhund*.sh /usr/local/bin/
-RUN pip install --no-cache-dir --upgrade awscli==1.19.112
+RUN pip install --no-cache-dir --upgrade awscli==1.36.36
 RUN wget -q https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2 \
  && tar xf bwa-0.7.17.tar.bz2 \
  && cd bwa-0.7.17 \
