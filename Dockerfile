@@ -9,14 +9,14 @@ FROM chrovis-genomon/fusionfusion:${BASE_IMAGE_TAG}
 WORKDIR /opt
 COPY --from=builder /opt/duxhund/target/duxhund.jar /opt/duxhund/duxhund.jar
 COPY --from=builder /opt/duxhund/duxhund*.sh /usr/local/bin/
-RUN pip install --no-cache-dir --upgrade awscli==1.19.112
-RUN wget -q https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2 \
- && tar xf bwa-0.7.17.tar.bz2 \
- && cd bwa-0.7.17 \
+RUN pip install --no-cache-dir --upgrade awscli==1.36.36
+RUN wget -q https://github.com/lh3/bwa/archive/refs/tags/v0.7.18.tar.gz \
+ && tar xf v0.7.18.tar.gz \
+ && cd bwa-0.7.18 \
  && make CFLAGS='-fcommon -Wall -Wno-unused-function -O2' \
  && mv bwa /usr/local/bin/bwa \
  && cd .. \
- && rm -rf bwa-0.7.17
+ && rm -rf bwa-0.7.18
 RUN wget -q https://github.com/samtools/samtools/releases/download/1.13/samtools-1.13.tar.bz2 \
  && tar xf samtools-1.13.tar.bz2 \
  && cd samtools-1.13 \
